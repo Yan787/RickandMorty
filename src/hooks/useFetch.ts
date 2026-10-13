@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function useFetch<T>(url: string, dependencies: any[] = []) {
-  //сохранять в мапу, lazy loading, scroll к каждому контейнеру
+export default function useFetch<T>(url: string) {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -17,7 +16,7 @@ export default function useFetch<T>(url: string, dependencies: any[] = []) {
         const res = await fetch(url, {
           signal: controller.signal,
         });
-        if (!res.ok) setError(`Ошибка ${res.status}`);
+        if (!res.ok) setError(`Ошибка: ${res.status}`);
         else {
           const json = (await res.json()) as T;
           setData(json);
@@ -25,7 +24,7 @@ export default function useFetch<T>(url: string, dependencies: any[] = []) {
       } catch (e) {
         if (e instanceof Error) {
           if (e.name === "AbortError") console.log(`Отмена запроса ${url}`);
-          else setError(`Ошибка ${e.name}, ${e.message}`);
+          else setError(`Ошибка: ${e.message}`);
         }
       } finally {
         if (!controller.signal.aborted) setIsLoading(false);
@@ -34,7 +33,7 @@ export default function useFetch<T>(url: string, dependencies: any[] = []) {
     fetchData();
 
     return () => controller.abort();
-  }, [url, ...dependencies]);
+  }, [url]);
 
   return { data, isLoading, error };
 }

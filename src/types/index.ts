@@ -1,1 +1,1 @@
-export type TabName = "users" | "posts" | "comments";
+export type TabName = "users" | "posts" | "comments" | "unknown";

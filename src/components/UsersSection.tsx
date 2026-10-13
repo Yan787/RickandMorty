@@ -1,29 +1,18 @@
-import useFetch from "../hooks/useFetch";
+import SectionShell from "./SectionShell";
 import type { User } from "../models/models";
-import type { TabName } from "../types";
 
-export default function UsersSection({ tabName }: { tabName: TabName }) {
-  const { data, isLoading, error } = useFetch<User[]>(
-    `https://jsonplaceholder.typicode.com/${tabName}`,
-    [tabName],
-  );
-
+export default function UsersSection({ url }: { url: string }) {
   return (
-    <>
-      {isLoading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
-      {!isLoading && data && (
-        <div>
-          {data.map((user) => (
-            <div className="card" key={user.id}>
-              <p>{user.name}</p>
-              <p>Email: {user.email}</p>
-              <p>Number: {user.phone}</p>
-              <p>Company: {user.company.name}</p>
-            </div>
-          ))}
+    <SectionShell
+      url={url}
+      renderFunc={(user: User) => (
+        <div className="card" key={user.id}>
+          <p>{user.name}</p>
+          <p>Email: {user.email}</p>
+          <p>Number: {user.phone}</p>
+          <p>Company: {user.company.name}</p>
         </div>
       )}
-    </>
+    />
   );
 }
