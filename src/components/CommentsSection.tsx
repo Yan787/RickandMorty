@@ -1,26 +1,17 @@
-import useFetch from "../hooks/useFetch";
 import type { Comment } from "../models/models";
-import type { TabName } from "../types";
-import { API_JPH_URL as URL } from "../config/env";
-import Loader from "./Loader";
-import Error from "./Error";
+import SectionShell from "./SectionShell";
 
-export default function CommentsSection({ tabName }: { tabName: TabName }) {
-  const { data, isLoading, error } = useFetch<Comment[]>(`${URL}/${tabName}`);
-
+export default function CommentsSection({ url }: { url: string }) {
   return (
-    <>
-      {isLoading && <Loader />}
-      {error && <Error>{error}</Error>}
-      {!isLoading &&
-        data &&
-        data.map((comment) => (
-          <div className="card" key={comment.id}>
-            <p className="card__text">User {comment.email}:</p>
-            <h3 className="card__title">{comment.name}</h3>
-            <p className="card__text">{comment.body} </p>
-          </div>
-        ))}
-    </>
+    <SectionShell
+      url={url}
+      renderFunc={(comment: Comment) => (
+        <div className="card" key={comment.id}>
+          <p className="card__text">User {comment.email}:</p>
+          <h3 className="card__title">{comment.name}</h3>
+          <p className="card__text">{comment.body} </p>
+        </div>
+      )}
+    />
   );
 }
