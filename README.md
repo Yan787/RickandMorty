@@ -11,7 +11,7 @@ yarn install --frozen-lockfile
 yarn dev
 ```
 
-Откройте адрес из вывода Vite. В `.env` должна быть переменная `VITE_API_JPH_URL` — базовый адрес API с ресурсами `/users`, `/posts` и `/comments`. Конфигурация читается в `src/config/env.ts`.
+Откройте адрес из вывода Vite. В `.env` должна быть переменная `VITE_API_JPH_URL` — базовый адрес API с ресурсами `/users`, `/posts` и `/comments`. Конфигурация читается в `src/shared/config/env.ts`.
 
 | Команда | Назначение |
 | --- | --- |
@@ -38,38 +38,38 @@ yarn dev
 
 | Компонент и файл | Для чего нужен | Что принимает (props) | Имеет тесты |
 | --- | --- | --- | --- |
-| `App` — `src/App.tsx` | Определяет маршруты, страницы и перенаправление | Без props. Требует роутер, подключённый в `src/main.tsx` | Нет |
-| `WelcomePage` — `src/pages/WelcomePage.tsx` | Показывает кнопку перехода к пользователям | Без props. Требует роутер для `Link` | Нет |
-| `ContentPage` — `src/pages/ContentPage.tsx` | Показывает вкладки и выбранную секцию; собирает URL API | `tab: TabName` — выбранный раздел | Нет |
-| `NotFoundPage` — `src/pages/NotFoundPage.tsx` | Показывает `404 not found` | Без props | Нет |
-| `Tab` — `src/components/Tab.tsx` | Ссылка на `/content/${tabName}` с выделением активной вкладки | `tabName: TabName`; `children: string` — подпись. Требует роутер | Нет |
-| `SectionShell<T>` — `src/components/SectionShell.tsx` | Загружает массив и выводит загрузку, ошибку либо список | `url: string`; `renderFunc: (item: T) => React.ReactNode` — отображение элемента. Возвращаемый элемент должен иметь стабильный `key` | Нет |
-| `UsersSection` — `src/components/UsersSection.tsx` | Через `SectionShell` показывает имя, email, телефон и компанию | `url: string` — адрес API с ответом `User[]` | Нет |
-| `PostsSection` — `src/components/PostsSection.tsx` | Через `SectionShell` показывает карточки постов | `url: string` — адрес API с ответом `Post[]` | Нет |
-| `CommentsSection` — `src/components/CommentsSection.tsx` | Через `SectionShell` показывает email, заголовок и текст комментариев | `url: string` — адрес API с ответом `Comment[]` | Нет |
-| `PostCard` — `src/components/PostCard.tsx` | Показывает пост и кнопку раскрытия комментариев; хранит `isActive` | `post: Post` — объект поста | Нет |
-| `PostComments` — `src/components/PostComments.tsx` | Загружает `/comments?postId=…`; показывает комментарии, загрузку и ошибки | `postId: number`. Базовый URL берёт из конфигурации | Нет |
-| `Loader` — `src/components/Loader.tsx` | Показывает `Loading...` | Без props | Нет |
-| `Error` — `src/components/Error.tsx` | Показывает сообщение со стилем ошибки | `children: string` — текст сообщения | Нет |
-| `UnknownSection` — `src/components/UnknownSection.tsx` | Выводит «Не найдена такая страница» через `Error` | Без props | Нет |
+| `App` — `src/app/App.tsx` | Определяет маршруты, страницы и перенаправление | Без props. Требует роутер, подключённый в `src/main.tsx` | Нет |
+| `WelcomePage` — `src/pages/welcome/ui/WelcomePage.tsx` | Показывает кнопку перехода к пользователям | Без props. Требует роутер для `Link` | Нет |
+| `ContentPage` — `src/pages/content/ui/ContentPage.tsx` | Показывает вкладки и выбранную секцию; собирает URL API | `tab: TabName` — выбранный раздел | Нет |
+| `NotFoundPage` — `src/pages/not-found/ui/NotFoundPage.tsx` | Показывает `404 not found` | Без props | Нет |
+| `Tab` — `src/pages/content/ui/Tab.tsx` | Ссылка на `/content/${tabName}` с выделением активной вкладки | `tabName: TabName`; `children: string` — подпись. Требует роутер | Нет |
+| `SectionShell<T>` — `src/shared/ui/SectionShell.tsx` | Загружает массив и выводит загрузку, ошибку либо список | `url: string`; `renderFunc: (item: T) => React.ReactNode` — отображение элемента. Возвращаемый элемент должен иметь стабильный `key` | Нет |
+| `UsersSection` — `src/pages/content/ui/UsersSection.tsx` | Через `SectionShell` показывает имя, email, телефон и компанию | `url: string` — адрес API с ответом `User[]` | Нет |
+| `PostsSection` — `src/pages/content/ui/PostsSection.tsx` | Через `SectionShell` показывает карточки постов | `url: string` — адрес API с ответом `Post[]` | Нет |
+| `CommentsSection` — `src/pages/content/ui/CommentsSection.tsx` | Через `SectionShell` показывает email, заголовок и текст комментариев | `url: string` — адрес API с ответом `Comment[]` | Нет |
+| `PostCard` — `src/pages/content/ui/PostCard.tsx` | Показывает пост и кнопку раскрытия комментариев; хранит `isActive` | `post: Post` — объект поста | Нет |
+| `PostComments` — `src/pages/content/ui/PostComments.tsx` | Загружает `/comments?postId=…`; показывает комментарии, загрузку и ошибки | `postId: number`. Базовый URL берёт из конфигурации | Нет |
+| `Loader` — `src/shared/ui/Loader.tsx` | Показывает `Loading...` | Без props | Нет |
+| `Error` — `src/shared/ui/Error.tsx` | Показывает сообщение со стилем ошибки | `children: string` — текст сообщения | Нет |
+| `UnknownSection` — `src/pages/content/ui/UnknownSection.tsx` | Выводит «Не найдена такая страница» через `Error` | Без props | Нет |
 
 При скрытии комментариев `PostComments` размонтируется и отменяет запрос. При повторном раскрытии выполняется новый запрос: кэширования нет.
 
 ## Типы данных
 
-Объявлены в `src/models/models.ts`:
+Объявлены в `src/entities/user/model/types.ts`, `src/entities/post/model/types.ts` и `src/entities/comment/model/types.ts`:
 
 - `Post`: `userId: number`, `id: number`, `title: string`, `body: string`.
 - `Comment`: `postId: number`, `id: number`, `name: string`, `email: string`, `body: string`.
 - `User`: `id: number`; строки `name`, `username`, `email`, `phone`, `website`; `address` со строками `street`, `suite`, `city`, `zipcode` и `geo: { lat: string; lng: string }`; `company` со строками `name`, `catchPhrase`, `bs`.
 
-`TabName` из `src/types/index.ts`: `"users" | "posts" | "comments" | "unknown"`.
+`TabName` из `src/pages/content/model/types.ts`: `"users" | "posts" | "comments" | "unknown"`.
 
 Типы TypeScript не проверяют структуру ответа API во время выполнения.
 
 ## Хук useFetch
 
-`src/hooks/useFetch.ts` экспортирует `useFetch<T>(url: string)`. Выполняет GET-запрос при монтировании и изменении URL.
+`src/shared/api/useFetch.ts` экспортирует `useFetch<T>(url: string)`. Выполняет GET-запрос при монтировании и изменении URL.
 
 | Возвращаемое поле | Тип | Назначение |
 | --- | --- | --- |
@@ -114,3 +114,27 @@ yarn dev
 - `PostCard` / `PostComments`: раскрытие, скрытие, правильный `postId` и отмена запроса при скрытии.
 - Маршруты и `Tab`: переходы, активная вкладка, перенаправление `/content` и оба вида неизвестных адресов.
 - Секции списков: вывод полей пользователя, поста и комментария на тестовых данных.
+
+## Структура FSD
+
+```text
+src/
+  app/                 # Маршруты, глобальные стили, публичный App
+  pages/
+    welcome/           # Стартовая страница
+    content/           # Вкладки, списки, раскрытие комментариев
+    not-found/         # Страница 404
+  entities/
+    user/model/        # Тип пользователя
+    post/model/        # Тип поста
+    comment/model/     # Тип комментария
+  shared/
+    api/               # useFetch
+    config/            # Настройки API
+    ui/                # Loader, Error, SectionShell
+  main.tsx             # Подключение React и BrowserRouter
+```
+
+Импорты направлены вниз: `app → pages → entities → shared` (промежуточные слои можно пропускать). Слайсы одного слоя не импортируют друг друга. Внешние потребители используют публичные `index.ts` слайсов и сегментов Shared; внутри слайса допустимы прямые относительные импорты. Тип вкладок принадлежит `pages/content/model`. Слои `features` и `widgets` пока не нужны: композиция списков и раскрытие комментариев используются только на странице контента.
+
+Правила структуры: [документация Feature-Sliced Design](https://feature-sliced.design/docs/concepts/app-splitting).

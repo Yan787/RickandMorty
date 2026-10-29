@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Post } from "../models/models";
+import type { Post } from "../../../entities/post";
 import PostComments from "./PostComments";
 
 export function PostCard({ post }: { post: Post }) {

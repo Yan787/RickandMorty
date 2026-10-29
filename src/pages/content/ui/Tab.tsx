@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import type { TabName } from "../types";
+import type { TabName } from "../model/types";
 
 export default function Tab({
   tabName,

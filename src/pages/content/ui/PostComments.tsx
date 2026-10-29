@@ -1,8 +1,7 @@
-import useFetch from "../hooks/useFetch";
-import type { Comment } from "../models/models";
-import { API_JPH_URL as URL } from "../config/env";
-import Loader from "./Loader";
-import Error from "./Error";
+import { useFetch } from "../../../shared/api";
+import type { Comment } from "../../../entities/comment";
+import { API_JPH_URL as URL } from "../../../shared/config";
+import { Error, Loader } from "../../../shared/ui";
 
 export default function PostComments({ postId }: { postId: number }) {
   const { data, isLoading, error } = useFetch<Comment[]>(

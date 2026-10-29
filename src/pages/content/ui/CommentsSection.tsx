@@ -1,5 +1,5 @@
-import type { Comment } from "../models/models";
-import SectionShell from "./SectionShell";
+import type { Comment } from "../../../entities/comment";
+import { SectionShell } from "../../../shared/ui";
 
 export default function CommentsSection({ url }: { url: string }) {
   return (

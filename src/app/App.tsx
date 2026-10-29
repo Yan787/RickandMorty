@@ -1,7 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import WelcomePage from "./pages/WelcomePage";
-import ContentPage from "./pages/ContentPage";
-import NotFoundPage from "./pages/NotFoundPage";
+import "./styles/index.scss";
+import { WelcomePage } from "../pages/welcome";
+import { ContentPage } from "../pages/content";
+import { NotFoundPage } from "../pages/not-found";
 
 export default function App() {
   return (

@@ -1,6 +1,6 @@
-import type { Post } from "../models/models";
+import type { Post } from "../../../entities/post";
 import { PostCard } from "./PostCard";
-import SectionShell from "./SectionShell.tsx";
+import { SectionShell } from "../../../shared/ui";
 
 export default function PostsSection({ url }: { url: string }) {
   return (

@@ -1,5 +1,5 @@
-import SectionShell from "./SectionShell";
-import type { User } from "../models/models";
+import { SectionShell } from "../../../shared/ui";
+import type { User } from "../../../entities/user";
 
 export default function UsersSection({ url }: { url: string }) {
   return (

@@ -1,10 +1,10 @@
-import UsersSection from "../components/UsersSection";
-import PostsSection from "../components/PostsSection";
-import CommentsSection from "../components/CommentsSection";
-import UnknownSection from "../components/UnknownSection";
-import Tab from "../components/Tab";
-import type { TabName } from "../types";
-import { API_JPH_URL as API } from "../config/env";
+import UsersSection from "./UsersSection";
+import PostsSection from "./PostsSection";
+import CommentsSection from "./CommentsSection";
+import UnknownSection from "./UnknownSection";
+import Tab from "./Tab";
+import type { TabName } from "../model/types";
+import { API_JPH_URL as API } from "../../../shared/config";
 
 const Endpoints = {
   users: "users",
