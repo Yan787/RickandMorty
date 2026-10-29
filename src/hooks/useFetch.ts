@@ -1,33 +1,35 @@
 import { useEffect, useState } from "react";
 
+interface FetchResult<T> {
+  url: string;
+  data: T | null;
+  error: string | null;
+}
+
 export default function useFetch<T>(url: string) {
-  const [data, setData] = useState<T | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<FetchResult<T> | null>(null);
 
   useEffect(() => {
-    setData(null);
-    setError(null);
-    setIsLoading(true);
-
     const controller = new AbortController();
     const fetchData = async () => {
       try {
         const res = await fetch(url, {
           signal: controller.signal,
         });
-        if (!res.ok) setError(`Ошибка: ${res.status}`);
-        else {
-          const json = (await res.json()) as T;
-          setData(json);
+        if (!res.ok) throw new Error(`Ошибка: ${res.status}`);
+
+        const json = (await res.json()) as T;
+        if (!controller.signal.aborted) {
+          setResult({ url, data: json, error: null });
         }
       } catch (e) {
-        if (e instanceof Error) {
-          if (e.name === "AbortError") console.log(`Отмена запроса ${url}`);
-          else setError(`Ошибка: ${e.message}`);
-        }
-      } finally {
-        if (!controller.signal.aborted) setIsLoading(false);
+        if (controller.signal.aborted) return;
+
+        setResult({
+          url,
+          data: null,
+          error: e instanceof Error ? e.message : "Неизвестная ошибка запроса",
+        });
       }
     };
     fetchData();
@@ -35,5 +37,11 @@ export default function useFetch<T>(url: string) {
     return () => controller.abort();
   }, [url]);
 
-  return { data, isLoading, error };
+  const isLoading = result === null || result.url !== url;
+
+  return {
+    data: isLoading ? null : result.data,
+    isLoading,
+    error: isLoading ? null : result.error,
+  };
 }
